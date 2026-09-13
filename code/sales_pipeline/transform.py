@@ -308,6 +308,9 @@ def find_top_entry(summary: list[dict], field: str = "revenue") -> dict:
       someone asks for `units_sold`.
     """
 def find_top_entry(summary: list[dict], field: str) -> dict:
+    if not summary:
+        return {}
+    
     top = None
     top_value = float("-inf")
 

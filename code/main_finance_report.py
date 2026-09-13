@@ -36,6 +36,7 @@ if len(sys.argv) > 1 and sys.argv[1].strip() != "":
     seed = int(sys.argv[1])
 
 
+
 # --- The report ------------------------------------------------------------------
 #
 # Fill in each TODO below. This first report names the exact function to call and
@@ -52,15 +53,19 @@ from sales_pipeline import (
 
 
 def main() -> None:
-    seed = int(sys.argv[1]) if len(sys.argv) > 1 else None
+    seed = None
+    if len(sys.argv) > 1 and sys.argv[1].strip() != "":
+        seed = int(sys.argv[1])
 
-    raw_rows = get_raw_sales_data(seed=seed)
-    cleaned_rows = clean_sales_data(raw_rows)
-    total = calculate_total_revenue(cleaned_rows)
 
-    print("=== FINANCE: Sales Summary ===\n")
-    print_sales_table(cleaned_rows)
-    print(f"\nTotal Revenue: ${total:,.2f}")
+    raw_data = get_raw_sales_data(seed)
+    clean_data = clean_sales_data(raw_data)
+    total_revenue = calculate_total_revenue(clean_data)
+
+    print("=== FINANCE: Daily Sales Detail ===")
+    print()
+    print_sales_table(clean_data)
+    print(f"Total Pipeline Revenue: ${total_revenue:,.2f}")
 
 
 if __name__ == "__main__":

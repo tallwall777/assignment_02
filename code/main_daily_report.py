@@ -30,12 +30,14 @@ from sales_pipeline import (
     summarize_by_day,
     find_top_entry,
     print_day_table,
+    calculate_total_revenue,
 )
 
 # Seed handling (same three lines as the other reports)
 seed = None
 if len(sys.argv) > 1 and sys.argv[1].strip() != "":
     seed = int(sys.argv[1])
+
 
 print("=== OPERATIONS: Sales by Day ===")
 print()
@@ -54,11 +56,14 @@ top_by_units = find_top_entry(day_summary, "units_sold")
 print_day_table(day_summary)
 print()
 print(
-    f"Top day by revenue: {top_by_revenue['date']} "
+    f"Busiest day by revenue: {top_by_revenue['date']} "
     f"(${top_by_revenue['revenue']:,.2f})"
 )
 print(
-    f"Top day by units:   {top_by_units['date']} "
+    f"Busiest day by units:   {top_by_units['date']} "
     f"({top_by_units['units_sold']} units)"
 )
 
+
+total_revenue = calculate_total_revenue(cleaned_rows)
+print(f"Total Revenue:          ${total_revenue:,.2f}")

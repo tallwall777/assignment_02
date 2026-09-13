@@ -23,19 +23,42 @@ Before running:  pip install -r requirements.txt
 """
 
 # --- The report ------------------------------------------------------------------
-#
-# No scaffolding. You have written two of these now, and this one asks the same
-# three questions of the same data: extract it, transform it, show it.
-#
-# What you have to work out for yourself:
-#
-#   - which package functions this report needs, and in what order
-#   - one function that does not exist yet — see README Step 9
-#   - the same seed handling the other two reports do
-#
-# README Step 9 shows the exact output your report must produce. The integration
-# tests check it line for line, so match it character for character.
-#
-# The rules have not changed: no arithmetic and no formatting logic in a report. If
-# you need a calculation this file cannot get by calling the package, the
-# calculation belongs in sales_pipeline/transform.py.
+import sys
+from sales_pipeline import (
+    get_raw_sales_data,
+    clean_sales_data,
+    summarize_by_day,
+    find_top_entry,
+    print_day_table,
+)
+
+# Seed handling (same three lines as the other reports)
+seed = None
+if len(sys.argv) > 1 and sys.argv[1].strip() != "":
+    seed = int(sys.argv[1])
+
+print("=== OPERATIONS: Sales by Day ===")
+print()
+
+# 1. Extract
+raw_rows = get_raw_sales_data(seed=seed)
+
+# 2. Transform
+cleaned_rows = clean_sales_data(raw_rows)
+day_summary = summarize_by_day(cleaned_rows)
+
+top_by_revenue = find_top_entry(day_summary, "revenue")
+top_by_units = find_top_entry(day_summary, "units_sold")
+
+# 3. Load
+print_day_table(day_summary)
+print()
+print(
+    f"Top day by revenue: {top_by_revenue['date']} "
+    f"(${top_by_revenue['revenue']:,.2f})"
+)
+print(
+    f"Top day by units:   {top_by_units['date']} "
+    f"({top_by_units['units_sold']} units)"
+)
+

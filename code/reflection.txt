@@ -1,6 +1,1 @@
-Write your reflection here.
-
-See reflection.md for what makes a good reflection — be specific, use the
-terminology from this assignment (package, module, ETL, coercion, public API,
-relative import, accumulator, group by, unit vs. integration test), and make it
-actionable.
+I learned how an ETL pipeline becomes maintainable when each module in a package has a clear responsibility, and how coercion functions prevent bad data from breaking the workflow. Building the public API in __init__.py taught me to be deliberate about relative imports and to export only the functions a report actually needs. I also got better at writing accumulator patterns for group‑by operations, especially when sorting rules differ between unit and integration tests. Where I still need practice is designing these accumulators more confidently and spotting when logic belongs in a module instead of in a report.
